@@ -1,6 +1,7 @@
 
 import com.baeldung.mybatis.spring.Users;
 import com.baeldung.mybatis.spring.UsersMapper;
+import org.apache.catalina.User;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,32 +17,11 @@ public class UsersMapperIntegrationTest {
     UsersMapper usersMapper;
 
 
-
-   // @Test
-   // public void whenRecordsInDatabase_shouldReturnUsersWithGivenId() {
-        //Users u = usersMapper.getUsers(1);
-        //Assertions.assertThat(u.getUserid()).isEqualTo(1);
-
-        /*Users newuser = new Users();
-        newuser.setUserid(3);;
-        newuser.setFirstname("Eduard");
-        newuser.setLastname("Alvarez");
-        newuser.setPassword("Hola");
-        newuser.setSalt("holasalt");
-        newuser.setUsername("ealvarez");
-         usersMapper.insertUsers(3, "Eddie", "Alvarez");*/
-
-        //Users u1 = usersMapper.getUsers(3);
-        //Assertions.assertThat(u1.getFirstname()).isEqualTo("Eduard");
-
-
-    //}
-
     @Test
     public void insertValue(){
 
         Users newuser = new Users();
-        newuser.setUserid(2);;
+        newuser.setUserid(3);;
         newuser.setFirstname("Eduard");
         newuser.setLastname("Alvarez");
         newuser.setPassword("Hola");
@@ -53,26 +33,26 @@ public class UsersMapperIntegrationTest {
 
      @Test
      public void whenRecordsInDatabase_shouldReturnUsersWithGivenId() {
-        Users u = usersMapper.getUsers(1);
+        Users u = usersMapper.getUser(1);
         Assertions.assertThat(u.getUserid()).isEqualTo(1);
-
-
-
     }
 
     @Test
-    public void seeIfReturnsId() {
-        Users newuser = new Users();
-        newuser.setUserid(3);;
-        newuser.setFirstname("Eduard");
-        newuser.setLastname("Alvarez");
-        newuser.setPassword("Hola");
-        newuser.setSalt("holasalt");
-        newuser.setUsername("user1");
+    public void deleteAUser(){
+        for(Users i : usersMapper.getUsers()){
+            System.out.println("Nombre::"+i.getFirstname()+" Id:::"+i.getUserid());
+        }
+        usersMapper.deleteUser(2);
+        usersMapper.updateUsername("Soy el sobreviviente",1);
 
-        int id = usersMapper.insertUsersReturningId(newuser);
-        System.out.println("Id --- "+id);
-
-
+        System.out.println("==========================");
+        for(Users i : usersMapper.getUsers()){
+            System.out.println("NOmbre::"+i.getFirstname()+" Id:::"+i.getUserid());
+        }
+        System.out.println("==========================");
     }
+
+
+
+
 }
