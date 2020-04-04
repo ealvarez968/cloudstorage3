@@ -1,6 +1,7 @@
 package com.baeldung.mybatis.spring;
 
 public class Article {
+
     private Long id;
     private String title;
     private String author;

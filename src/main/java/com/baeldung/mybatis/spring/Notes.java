@@ -5,10 +5,10 @@ public class Notes {
     private int noteid;
     private String notetitle;
     private String notedescription;
-    private int userId;
+    private int userid;
 
-    public int getUserId() {
-        return userId;
+    public int getUserid() {
+        return userid;
     }
 
     public int getNoteid() {
@@ -23,8 +23,8 @@ public class Notes {
         return notetitle;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUserid(int userid) {
+        this.userid = userid;
     }
 
     public void setNotedescription(String notedescription) {

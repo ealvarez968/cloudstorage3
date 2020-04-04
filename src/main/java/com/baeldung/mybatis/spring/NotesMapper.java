@@ -20,6 +20,9 @@ public interface NotesMapper {
     @Update("UPDATE NOTES SET notedescription=#{notedescription} WHERE noteid =#{noteid}")
     void updateNoteDescription(String notedescription, int noteid);
 
+    @Insert("INSERT INTO NOTES (noteid, notetitle, notedescription, userid) values (#{noteid},#{notetitle}, #{notedescription}, #{userid})")
+    void insertUsers(Notes notes);
+
 
     @Delete("DELETE FROM NOTES WHERE noteid =#{noteid}")
     void deleteNote(int noteid);
