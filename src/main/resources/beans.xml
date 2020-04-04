@@ -14,27 +14,27 @@
     </bean>
 
     <bean id="articleMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="mapperInterface" value="com.baeldung.mybatis.spring.ArticleMapper"/>
+        <property name="mapperInterface" value="com.udacity.jwdnd.course1.cloudstorage.model.ArticleMapper"/>
         <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
     </bean>
 
     <bean id="usersMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="mapperInterface" value="com.baeldung.mybatis.spring.UsersMapper"/>
+        <property name="mapperInterface" value="com.udacity.jwdnd.course1.cloudstorage.model.UsersMapper"/>
         <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
     </bean>
 
     <bean id="notesMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="mapperInterface" value="com.baeldung.mybatis.spring.NotesMapper"/>
+        <property name="mapperInterface" value="com.udacity.jwdnd.course1.cloudstorage.model.NotesMapper"/>
         <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
     </bean>
 
     <bean id="filesMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="mapperInterface" value="com.baeldung.mybatis.spring.FilesMapper"/>
+        <property name="mapperInterface" value="com.udacity.jwdnd.course1.cloudstorage.model.FilesMapper"/>
         <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
     </bean>
 
     <bean id="credentialsMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="mapperInterface" value="com.baeldung.mybatis.spring.CredentialsMapper"/>
+        <property name="mapperInterface" value="com.udacity.jwdnd.course1.cloudstorage.model.CredentialsMapper"/>
         <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
     </bean>
 

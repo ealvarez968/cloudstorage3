@@ -1,4 +1,4 @@
-package com.baeldung.mybatis.spring;
+package com.udacity.jwdnd.course1.cloudstorage.model;
 
 
 import org.apache.ibatis.annotations.*;

@@ -1,7 +1,6 @@
 
-import com.baeldung.mybatis.spring.Users;
-import com.baeldung.mybatis.spring.UsersMapper;
-import org.apache.catalina.User;
+import com.udacity.jwdnd.course1.cloudstorage.model.Users;
+import com.udacity.jwdnd.course1.cloudstorage.model.UsersMapper;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;

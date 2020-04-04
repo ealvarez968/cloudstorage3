@@ -1,10 +1,10 @@
-package com.baeldung.mybatis.spring;
+package com.udacity.jwdnd.course1.cloudstorage.model;
 
-import org.apache.catalina.User;
 import org.apache.ibatis.annotations.*;
 
 import java.util.ArrayList;
 
+@Mapper
 public interface UsersMapper {
 
     @Select("SELECT * FROM USERS WHERE userid = #{userid}")

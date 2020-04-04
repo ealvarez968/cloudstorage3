@@ -49,6 +49,8 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+
+
                                 <tr>
                                     <td>
                                         <a target="_blank" class="btn btn-success">View</a>
@@ -75,6 +77,15 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+
+                                <tr th:each="n: ${notes}">
+                                    <td>
+                                        <button type="button" class="btn btn-success">Edit</button>
+                                        <a class="btn btn-danger">Delete</a>
+                                    </td>
+                                    <td  scope="row" th:text="${n.notetitle}" />
+                                    <td th:text="${n.notedescription}" />
+                                </tr>
                                     <tr>
                                         <td>
                                             <button type="button" class="btn btn-success">Edit</button>

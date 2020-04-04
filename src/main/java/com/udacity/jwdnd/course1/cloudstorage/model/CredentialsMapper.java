@@ -1,12 +1,11 @@
-package com.baeldung.mybatis.spring;
+package com.udacity.jwdnd.course1.cloudstorage.model;
 
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.ArrayList;
 
+
+@Mapper
 public interface CredentialsMapper {
 
     @Select("SELECT * FROM CREDENTIALS WHERE credentialid = #{credentialid}")

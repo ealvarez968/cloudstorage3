@@ -1,15 +1,13 @@
 
 
-import com.baeldung.mybatis.spring.*;
-import org.apache.catalina.User;
+import com.udacity.jwdnd.course1.cloudstorage.model.Article;
+import com.udacity.jwdnd.course1.cloudstorage.model.ArticleMapper;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import static org.junit.Assert.*;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)

@@ -1,4 +1,4 @@
-package com.baeldung.mybatis.spring;
+package com.udacity.jwdnd.course1.cloudstorage.model;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -11,7 +11,7 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import javax.sql.DataSource;
 
 @Configuration
-@MapperScan("com.baeldung.mybatis")
+@MapperScan("com.udacity.jwdnd.course1.cloudstorage")
 public class PersistenceConfig {
 
     @Bean
@@ -19,7 +19,7 @@ public class PersistenceConfig {
         return new EmbeddedDatabaseBuilder()
                 .setType(EmbeddedDatabaseType.H2)
                 .addScript("schema.sql")
-                .addScript("data.sql")
+                //.addScript("data.sql")
                 .build();
     }
 

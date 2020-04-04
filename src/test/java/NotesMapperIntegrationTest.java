@@ -1,4 +1,4 @@
-import com.baeldung.mybatis.spring.NotesMapper;
+import com.udacity.jwdnd.course1.cloudstorage.model.NotesMapper;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;

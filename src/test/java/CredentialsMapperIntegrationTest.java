@@ -1,4 +1,4 @@
-import com.baeldung.mybatis.spring.CredentialsMapper;
+import com.udacity.jwdnd.course1.cloudstorage.model.CredentialsMapper;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;

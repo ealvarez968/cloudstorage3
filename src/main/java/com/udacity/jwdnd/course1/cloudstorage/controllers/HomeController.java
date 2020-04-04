@@ -1,9 +1,8 @@
 package com.udacity.jwdnd.course1.cloudstorage.controllers;
 
 
-import com.baeldung.mybatis.spring.Notes;
-import com.baeldung.mybatis.spring.NotesMapper;
-import com.baeldung.mybatis.spring.UsersMapper;
+import com.udacity.jwdnd.course1.cloudstorage.model.Notes;
+import com.udacity.jwdnd.course1.cloudstorage.model.NotesMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.ui.Model;
@@ -21,27 +20,33 @@ public class HomeController {
     @RequestMapping("/home")
     public ModelAndView getHome(Model m ){
         Notes n = new Notes();
-        n.setNotetitle("Titulo");
+        n.setNotetitle("Titulo 1 verdad");
         n.setNoteid(1);
-        n.setNotedescription("Descrip");
+        n.setNotedescription("Descrip111111111111111");
+        n.setUserid(1);
+
 
         Notes n2 = new Notes();
-        n2.setNotetitle("Titulo");
+        n2.setNotetitle("Titulo222222");
         n2.setNoteid(2);
-        n2.setNotedescription("Descrip");
+        n2.setNotedescription("Descripasdfasdfasdfasdf");
+        n2.setUserid(1);
 
         Notes n3 = new Notes();
-        n3.setNotetitle("Titulo");
+        n3.setNotetitle("Titulo333333");
         n3.setNoteid(3);
-        n3.setNotedescription("Descrip");
+        n3.setNotedescription("Descripzzzzzzzzzzzzzz");
+        n3.setUserid(1);
 
         notesMapper.insertUsers(n);
         notesMapper.insertUsers(n2);
         notesMapper.insertUsers(n3);
+        notesMapper.getNote(1);
 
 
         ModelAndView mav = new ModelAndView();
         mav.setViewName("home");
+        mav.addObject("notes", notesMapper.getNotes());
         return mav;
     }
 }
