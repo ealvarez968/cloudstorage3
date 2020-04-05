@@ -8,7 +8,8 @@ public class Files {
     private String filesize;
     private int userid;
     //Mapped to java.sql.Blob (java.io.InputStream is also supported).
-    private String filedata;
+    private byte[] filedata;
+
 
     public int getUserid() {
         return userid;
@@ -22,7 +23,7 @@ public class Files {
         return contenttype;
     }
 
-    public String getFiledata() {
+    public byte[] getFiledata() {
         return filedata;
     }
 
@@ -42,7 +43,7 @@ public class Files {
         this.contenttype = contenttype;
     }
 
-    public void setFiledata(String filedata) {
+    public void setFiledata(byte[] filedata) {
         this.filedata = filedata;
     }
 

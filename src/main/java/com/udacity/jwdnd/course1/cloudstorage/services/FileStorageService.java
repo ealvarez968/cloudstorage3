@@ -8,10 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.math.BigInteger;
 import java.util.Base64;
 
@@ -36,9 +33,27 @@ public class FileStorageService {
             dbFile.setContenttype(file.getContentType());
             System.out.println(Base64.getEncoder().encodeToString(file.getBytes()));
             //dbFile.setFiledata(Base64.getEncoder().encodeToString(file.getBytes()));
-            String result = new BigInteger(1, file.getBytes()).toString(16);
-            dbFile.setFiledata(result);
+
+
+
+            /*InputStreamReader isReader = new InputStreamReader(file.getInputStream());
+            //Creating a BufferedReader object
+            BufferedReader reader = new BufferedReader(isReader);
+            StringBuffer sb = new StringBuffer();
+            String str;
+            while((str = reader.readLine())!= null){
+                sb.append(str);
+            }
+            System.out.println(sb.toString());
+            dbFile.setFiledata(sb.toString());*/
+
+            dbFile.setFiledata(file.getBytes());
+
+            //String result = new BigInteger(1, file.getBytes()).toString(16);
+           // dbFile.setFiledata(result);
             dbFile.setUserid(userid);
+
+
 
             //dbFile.setFiledata(new String(file.getBytes()));
             filesMapper.insertFile(dbFile);

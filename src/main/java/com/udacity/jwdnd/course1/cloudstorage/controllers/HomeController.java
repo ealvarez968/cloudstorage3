@@ -7,6 +7,11 @@ import com.udacity.jwdnd.course1.cloudstorage.services.EncryptionService;
 import com.udacity.jwdnd.course1.cloudstorage.services.FileStorageService;
 import com.udacity.jwdnd.course1.cloudstorage.services.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.ContextConfiguration;
@@ -20,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.crypto.Cipher;
+import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
@@ -33,6 +39,8 @@ public class HomeController {
     private UsersMapper usersMapper;
     @Autowired
     private CredentialsMapper credentialsMapper;
+    @Autowired
+    private FilesMapper filesMapper;
 
     private EncryptionService es;
 
@@ -258,5 +266,16 @@ public class HomeController {
         Files f = dbFileStorageService.storeFile(file, _user.getUserid());
 
         return new RedirectView("/home");
+    }
+
+    @GetMapping("/downloadFile/{fileId}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable("fileId") int fileId) {
+        String _sessionUsername = SecurityContextHolder.getContext().getAuthentication().getName();
+        Users _user = usersMapper.getUserByUsername(_sessionUsername);
+        Files dbFile = filesMapper.getFile(fileId, _user.getUserid());
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(dbFile.getContenttype()))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + dbFile.getFilename() + "\"")
+                .body(new ByteArrayResource(dbFile.getFiledata()));
     }
 }
