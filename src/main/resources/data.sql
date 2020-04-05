@@ -6,21 +6,9 @@ VALUES (1, 'Working with MyBatis in Spring', 'Baeldung');
 
 INSERT INTO USERS (username,salt,password,firstname,lastname)
 VALUES ('ealvarez','SALT','$2a$10$d262hb9nkGCBgMG5c6y3V.USZfMXCPRe7Z.tgtXvf01eErbvogSnW', 'Eduardo', 'Alvarez');
-INSERT INTO USERS (username,salt,password,firstname,lastname)
-VALUES ('prueba','SALT','aqswdefr1', 'Prueba', 'GG');
-
-INSERT INTO USERS (username,salt,password,firstname,lastname)
-VALUES ('usuario3','SALT','aqswdefr1', 'Prueba', 'GG');
 
 INSERT INTO ROLES (name, userid)
 VALUES ('ADMIN', 1);
-INSERT INTO ROLES (name, userid)
-VALUES ('USER', 2);
-
-INSERT INTO ROLES (name, userid)
-VALUES ('USER', 3);
-INSERT INTO ROLES (name, userid)
-VALUES ('ADMIN', 3);
 
 
 

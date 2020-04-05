@@ -36,34 +36,41 @@ public class AppWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-       /* http
+        http
                 .authorizeRequests()
                 .antMatchers( "/favicon.ico").permitAll()
-                .antMatchers("/", "/home").permitAll()
+                .antMatchers( "/signup").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/login")
+                .loginPage("/login").failureUrl("/login?error=true").defaultSuccessUrl("/dashboard", true)
                 .permitAll()
                 .and()
                 .logout()
-                .permitAll();*/
-        http.authorizeRequests()
-                .antMatchers("/").permitAll()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/login")
+                .invalidateHttpSession(true)        // set invalidation state when logout
+                .deleteCookies("JSESSIONID")
+
+                .and()
+                .exceptionHandling()
+                .accessDeniedPage("/403");
+        /*http.authorizeRequests()
+
                 .antMatchers( "/favicon.ico").permitAll()
-                .antMatchers("/login", "/signup", "/signup/validate","/registro","/registro/validate").permitAll()
+                .antMatchers("/login", "/signup", "/signup/validate").permitAll()
                 .antMatchers().permitAll()
-                .antMatchers("/home","/greeting","/home/notes/add").hasAuthority("ADMIN").anyRequest()
+                .antMatchers("/home","/home/notes/add", "/").hasAuthority("ADMIN").anyRequest()
                     .authenticated().and().csrf().disable().formLogin()
                 .loginPage("/login").failureUrl("/login?error=true")
-                .defaultSuccessUrl("/home")
+                .defaultSuccessUrl("/")
                 .usernameParameter("username")
                 .passwordParameter("password")
                 .and().logout()
                 //.logoutUrl("/logout").invalidateHttpSession(true).deleteCookies("JSESSIONID")
                  .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/login").and().exceptionHandling()
-                .accessDeniedPage("/access-denied");
+                .accessDeniedPage("/access-denied");*/
 
 
 

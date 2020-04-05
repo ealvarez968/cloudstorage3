@@ -2,10 +2,7 @@ package com.udacity.jwdnd.course1.cloudstorage.controllers;
 
 
 import com.udacity.jwdnd.course1.cloudstorage.config.Constant;
-import com.udacity.jwdnd.course1.cloudstorage.model.Credentials;
-import com.udacity.jwdnd.course1.cloudstorage.model.Files;
-import com.udacity.jwdnd.course1.cloudstorage.model.Users;
-import com.udacity.jwdnd.course1.cloudstorage.model.UsersMapper;
+import com.udacity.jwdnd.course1.cloudstorage.model.*;
 import com.udacity.jwdnd.course1.cloudstorage.services.EncryptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,6 +19,9 @@ public class SignUpController {
 
     @Autowired
     UsersMapper usersMapper;
+
+    @Autowired
+    RolesMapper rolesMapper;
 
     private EncryptionService es;
 
@@ -114,6 +114,8 @@ public class SignUpController {
         newUser.setUsername(user.getUsername());
         usersMapper.insertUser(newUser);
 
+        Users inserted = usersMapper.getUserByUsername(user.getUsername());
+        rolesMapper.insertRole("ADMIN", inserted.getUserid());
         for(Users u : usersMapper.getUsers()){
             System.out.println("username "+u.getUsername()+ " Password: "+u.getPassword());
 

@@ -29,7 +29,7 @@ public class CloudStorageApplication {
 				System.out.println(beanName);
 			}
 
-			System.out.println("NEW DATA");
+
 
 
 		};
