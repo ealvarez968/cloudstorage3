@@ -31,31 +31,11 @@ public class FileStorageService {
             Files dbFile = new Files();
             dbFile.setFilename(fileName);
             dbFile.setContenttype(file.getContentType());
-            System.out.println(Base64.getEncoder().encodeToString(file.getBytes()));
-            //dbFile.setFiledata(Base64.getEncoder().encodeToString(file.getBytes()));
-
-
-
-            /*InputStreamReader isReader = new InputStreamReader(file.getInputStream());
-            //Creating a BufferedReader object
-            BufferedReader reader = new BufferedReader(isReader);
-            StringBuffer sb = new StringBuffer();
-            String str;
-            while((str = reader.readLine())!= null){
-                sb.append(str);
-            }
-            System.out.println(sb.toString());
-            dbFile.setFiledata(sb.toString());*/
-
+            dbFile.setFilesize(file.getSize()+"");
             dbFile.setFiledata(file.getBytes());
 
-            //String result = new BigInteger(1, file.getBytes()).toString(16);
-           // dbFile.setFiledata(result);
             dbFile.setUserid(userid);
 
-
-
-            //dbFile.setFiledata(new String(file.getBytes()));
             filesMapper.insertFile(dbFile);
             return dbFile;
 

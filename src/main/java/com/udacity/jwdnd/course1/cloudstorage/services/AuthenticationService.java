@@ -41,10 +41,7 @@ public class AuthenticationService implements UserDetailsService {
         }
         bCryptPasswordEncoder=  new BCryptPasswordEncoder();
         bCryptPasswordEncoder.encode(user.getPassword());
-        System.out.println(user.getFirstname());
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaa");
         List<GrantedAuthority> authorities = getUserAuthority(usersMapper.getRolesByUserid(user.getUserid()));
-        //Users user = usersMapper.
 
         return buildUserForAuthentication(user, authorities);
 

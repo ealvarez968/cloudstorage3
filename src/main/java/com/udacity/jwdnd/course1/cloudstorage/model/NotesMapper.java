@@ -27,8 +27,8 @@ public interface NotesMapper {
     @Update("UPDATE NOTES SET notedescription=#{notedescription} WHERE noteid =#{noteid}")
     void updateNoteDescription(String notedescription, int noteid);
 
-    @Update("UPDATE NOTES SET notetitle=#{notetitle} , notedescription=#{notedescription} WHERE noteid =#{noteid}")
-    void updateNote(String notetitle, String notedescription, int noteid);
+    @Update("UPDATE NOTES SET notetitle=#{notetitle} , notedescription=#{notedescription} WHERE noteid =#{noteid} and userid= #{userid}")
+    void updateNote(String notetitle, String notedescription, int noteid, int userid);
 
     @Insert("INSERT INTO NOTES ( notetitle, notedescription, userid) values (#{notetitle}, #{notedescription}, #{userid})")
     void insertNote(Notes notes);

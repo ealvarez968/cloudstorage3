@@ -26,7 +26,7 @@ public class UsersMapperIntegrationTest {
         newuser.setPassword("Hola");
         newuser.setSalt("holasalt");
         newuser.setUsername("user2");
-        usersMapper.insertUsers(newuser);
+        usersMapper.insertUser(newuser);
 
     }
 

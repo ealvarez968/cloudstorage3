@@ -25,7 +25,7 @@ public class InsertService implements UsersMapper {
     }
 
     @Override
-    public void insertUsers(Users users) {
+    public void insertUser(Users users) {
 
     }
 

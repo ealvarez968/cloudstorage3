@@ -45,7 +45,7 @@ public class HomeController {
     private EncryptionService es;
 
     @PostMapping("/home/notes/add")
-    public RedirectView notes(@ModelAttribute Notes note, RedirectAttributes attributes,@RequestParam(defaultValue="-1") int noteId) {
+    public RedirectView notes(@ModelAttribute Notes note, RedirectAttributes attributes, @RequestParam(defaultValue="-1") int noteId) {
         String _sessionUsername = SecurityContextHolder.getContext().getAuthentication().getName();
         Users _user = usersMapper.getUserByUsername(_sessionUsername);
 
@@ -59,7 +59,9 @@ public class HomeController {
 
         }
 
-        if(note.getNotetitle().trim().length() == 0
+        if(note.getNotetitle() == null
+                || note.getNotedescription() == null
+                || note.getNotetitle().trim().length() == 0
                 || note.getNotedescription().trim().length() == 0){
 
             attributes.addFlashAttribute("alertClass", "danger");
@@ -86,7 +88,7 @@ public class HomeController {
 
         attributes.addFlashAttribute("msg", "Your note "+note.getNotetitle()+" has been updated successfully");
 
-        notesMapper.updateNote(note.getNotetitle(),note.getNotedescription(),noteId);
+        notesMapper.updateNote(note.getNotetitle(),note.getNotedescription(),noteId, _user.getUserid());
 
         return new RedirectView("/home");
 
@@ -106,7 +108,10 @@ public class HomeController {
 
         }
 
-        if(credential.getPassword().trim().length() == 0
+        if(credential.getPassword() == null
+                || credential.getUrl() == null
+                || credential.getUsername() == null
+                || credential.getPassword().trim().length() == 0
                 || credential.getUrl().trim().length() == 0
                 || credential.getUsername().trim().length() == 0){
 
@@ -118,16 +123,16 @@ public class HomeController {
         attributes.addFlashAttribute("alertClass", "success");
 
         if(credentialId == -1){
-            String key = es.generateRandomSpecialCharacters(Constant.KEY_LENGTH);
+            final String KEY = es.generateRandomSpecialCharacters(Constant.KEY_LENGTH);
             Credentials newCredential = new Credentials();
 
             newCredential.setUserid(_user.getUserid());
-            newCredential.setKey(key);
+            newCredential.setKey(KEY);
             System.out.println("key");
-            System.out.println(key);
+            System.out.println(KEY);
             newCredential.setUrl(credential.getUrl());
             newCredential.setUsername(credential.getUsername());
-            newCredential.setPassword( es.encryptValue(credential.getPassword(),key));
+            newCredential.setPassword( es.encryptValue(credential.getPassword(),KEY));
 
             credentialsMapper.insertNote(newCredential);
 
@@ -142,10 +147,6 @@ public class HomeController {
 
         credentialsMapper.updateCredential(credential.getUrl(),credential.getUsername(),
                 es.encryptValue(credential.getPassword(), oldCredential.getKey()),credentialId,_user.getUserid());
-        //notesMapper.updateNote(note.getNotetitle(),note.getNotedescription(),noteId);
-
-
-
 
         return new RedirectView("/home");
     }
@@ -166,6 +167,27 @@ public class HomeController {
         attributes.addFlashAttribute("msg", "Your note "+n.getNotetitle()+" has been deleted successfully");
 
         notesMapper.deleteNote(n.getNoteid(), _user.getUserid());
+
+        return new RedirectView("/home");
+
+    }
+
+    @GetMapping("/home/files/delete/{fileid}")
+    public RedirectView deleteFile( @PathVariable("fileid") int fileid,  RedirectAttributes attributes){
+        String _sessionUsername = SecurityContextHolder.getContext().getAuthentication().getName();
+        Users _user = usersMapper.getUserByUsername(_sessionUsername);
+
+        Files f = filesMapper.getFile(fileid, _user.getUserid());
+
+        if(_user == null){
+            attributes.addFlashAttribute("alertClass", "danger");
+            attributes.addFlashAttribute("msg", "File not found.");
+            return new RedirectView("/home");
+        }
+        attributes.addFlashAttribute("alertClass", "success");
+        attributes.addFlashAttribute("msg", "Your file "+f.getFilename()+" has been deleted successfully");
+
+        filesMapper.deleteFiles(f.getFileid(), _user.getUserid());
 
         return new RedirectView("/home");
 
@@ -201,12 +223,12 @@ public class HomeController {
 
     @RequestMapping("/home")
     public ModelAndView getHome(@ModelAttribute("alertClass") String alertClass, @ModelAttribute("msg") String msg){
+        String _sessionUsername = SecurityContextHolder.getContext().getAuthentication().getName();
+        Users _user = usersMapper.getUserByUsername(_sessionUsername);
+        es = new EncryptionService();
 
         ModelAndView mav = new ModelAndView();
         mav.setViewName("home");
-
-        String _sessionUsername = SecurityContextHolder.getContext().getAuthentication().getName();
-        Users _user = usersMapper.getUserByUsername(_sessionUsername);
 
         if(_user == null){
 
@@ -216,32 +238,16 @@ public class HomeController {
 
         }
 
-        try{
-            int maxKeyLen = Cipher.getMaxAllowedKeyLength("AES");
-            System.out.println("MaxAllowedKeyLength=[" + maxKeyLen + "].");
-
-        }catch (NoSuchAlgorithmException e){
-
-        }
-
-
-        es = new EncryptionService();
-
-        /*String enripto = es.encryptValue("aqswdefr1234","" +
-                "");
-
-        System.out.println("Ecriptado es   "+enripto);*/
-
         ArrayList<Credentials> newCreds = new ArrayList<>();
-        for(Credentials c : credentialsMapper.getCredentials()){
+        for(Credentials c : credentialsMapper.getCredentialsByUserid(_user.getUserid())){
             c.setUnencripted(es.decryptValue(c.getPassword(),c.getKey()));
             newCreds.add(c);
         }
 
 
-
         mav.addObject("notes", notesMapper.getNotesByUserid(_user.getUserid()));
         mav.addObject("credentials", newCreds);
+        mav.addObject("files", filesMapper.getFilesByUserId(_user.getUserid()));
         mav.addObject("note", new Notes());
         mav.addObject("file", new Files());
         mav.addObject("credential", new Credentials());
@@ -259,16 +265,19 @@ public class HomeController {
 
     @PostMapping("/home/file/upload")
     public RedirectView file(@RequestParam("fileUpload") MultipartFile file,
-                             RedirectAttributes redirectAttributes) {
+                             RedirectAttributes attributes) {
         String _sessionUsername = SecurityContextHolder.getContext().getAuthentication().getName();
         Users _user = usersMapper.getUserByUsername(_sessionUsername);
 
         Files f = dbFileStorageService.storeFile(file, _user.getUserid());
 
+        attributes.addFlashAttribute("alertClass", "success");
+        attributes.addFlashAttribute("msg", "Your file  "+f.getFilename()+" has been saved successfully");
+
         return new RedirectView("/home");
     }
 
-    @GetMapping("/downloadFile/{fileId}")
+    @GetMapping("/download/{fileId}")
     public ResponseEntity<Resource> downloadFile(@PathVariable("fileId") int fileId) {
         String _sessionUsername = SecurityContextHolder.getContext().getAuthentication().getName();
         Users _user = usersMapper.getUserByUsername(_sessionUsername);

@@ -11,12 +11,25 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
-import java.util.Random;
+import java.security.SecureRandom;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class EncryptionService {
     private Logger logger = LoggerFactory.getLogger(EncryptionService.class);
+
+    private static final String CHAR_LOWER = "abcdefghijklmnopqrstuvwxyz";
+    private static final String CHAR_UPPER = CHAR_LOWER.toUpperCase();
+    private static final String NUMBER = "0123456789";
+    private static final String OTHER_CHAR = "!@#$%&*()_+-=[]?";
+
+    private static final String PASSWORD_ALLOW_BASE = CHAR_LOWER + CHAR_UPPER + NUMBER + OTHER_CHAR;
+    // optional, make it more random
+    private static final String PASSWORD_ALLOW_BASE_SHUFFLE = shuffleString(PASSWORD_ALLOW_BASE);
+    private static final String PASSWORD_ALLOW = PASSWORD_ALLOW_BASE_SHUFFLE;
+
+    private static SecureRandom random = new SecureRandom();
 
     public String encryptValue(String data, String key) {
         byte[] encryptedValue = null;
@@ -51,11 +64,25 @@ public class EncryptionService {
     }
 
     public String generateRandomSpecialCharacters(int length) {
-        byte[] array = new byte[length]; // length is bounded by 7
-        new Random().nextBytes(array);
-        String generatedString = new String(array, Charset.forName("UTF-8"));
+        StringBuilder sb = new StringBuilder(length);
+        for (int i = 0; i < length; i++) {
 
-        System.out.println(generatedString);
-        return generatedString;
+            int rndCharAt = random.nextInt(PASSWORD_ALLOW.length());
+            char rndChar = PASSWORD_ALLOW.charAt(rndCharAt);
+
+            // debug
+            System.out.format("%d\t:\t%c%n", rndCharAt, rndChar);
+
+            sb.append(rndChar);
+
+        }
+
+        return sb.toString();
+    }
+
+    public static String shuffleString(String string) {
+        List<String> letters = Arrays.asList(string.split(""));
+        Collections.shuffle(letters);
+        return letters.stream().collect(Collectors.joining());
     }
 }

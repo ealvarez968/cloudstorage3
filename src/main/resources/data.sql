@@ -1,12 +1,7 @@
 
 INSERT INTO ARTICLES
 VALUES (1, 'Working with MyBatis in Spring', 'Baeldung');
-CREATE TABLE IF NOT EXISTS ROLES (
-  roleid INT PRIMARY KEY auto_increment,
-  name VARCHAR(20),
-  userid INT ,
-  foreign key (userid) references USERS(userid)
-);
+
 
 
 INSERT INTO USERS (username,salt,password,firstname,lastname)

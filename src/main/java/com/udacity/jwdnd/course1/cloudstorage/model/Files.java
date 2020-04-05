@@ -7,7 +7,6 @@ public class Files {
     private String contenttype;
     private String filesize;
     private int userid;
-    //Mapped to java.sql.Blob (java.io.InputStream is also supported).
     private byte[] filedata;
 
 

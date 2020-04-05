@@ -24,8 +24,8 @@ public interface UsersMapper {
     void insertUsers(int userid, String firstname, String lastname);*/
     /*@Insert("INSERT INTO USERS (userid,username) values (#{userid}, #{username})")
     void insertUsers(int userid, String username);*/
-    @Insert("INSERT INTO USERS (userid, username, salt, password, firstname, lastname) values (#{userid},#{username}, #{salt}, #{password}, #{firstname}, #{lastname})")
-    void insertUsers(Users users);
+    @Insert("INSERT INTO USERS ( username, salt, password, firstname, lastname) values (#{username}, #{salt}, #{password}, #{firstname}, #{lastname})")
+    void insertUser(Users users);
 
     @Select("SELECT * FROM USERS ")
     ArrayList<Users> getUsers();

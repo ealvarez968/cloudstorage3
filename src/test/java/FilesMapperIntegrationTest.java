@@ -16,7 +16,7 @@ public class FilesMapperIntegrationTest {
 
     @Test
     public void insertValue(){
-        int size =filesMapper.getFiles().size();
+        int size =filesMapper.getFilesByUserId(1).size();
         Assertions.assertThat(size).isEqualTo(0);
     }
 }
