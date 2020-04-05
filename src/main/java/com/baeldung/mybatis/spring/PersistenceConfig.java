@@ -1,4 +1,4 @@
-package com.udacity.jwdnd.course1.cloudstorage.model;
+package com.baeldung.mybatis.spring;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -19,7 +19,7 @@ public class PersistenceConfig {
         return new EmbeddedDatabaseBuilder()
                 .setType(EmbeddedDatabaseType.H2)
                 .addScript("schema.sql")
-                //.addScript("data.sql")
+                .addScript("data.sql")
                 .build();
     }
 

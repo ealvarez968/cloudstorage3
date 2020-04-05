@@ -20,7 +20,7 @@ public class UsersMapperIntegrationTest {
     public void insertValue(){
 
         Users newuser = new Users();
-        newuser.setUserid(3);;
+
         newuser.setFirstname("Eduard");
         newuser.setLastname("Alvarez");
         newuser.setPassword("Hola");
@@ -37,11 +37,17 @@ public class UsersMapperIntegrationTest {
     }
 
     @Test
+    public void getRoles(){
+        int size =usersMapper.getRolesByUserid(3).size();
+        Assertions.assertThat(size).isEqualTo(2);
+    }
+
+    @Test
     public void deleteAUser(){
         for(Users i : usersMapper.getUsers()){
             System.out.println("Nombre::"+i.getFirstname()+" Id:::"+i.getUserid());
         }
-        usersMapper.deleteUser(2);
+        //usersMapper.deleteUser(2);
         usersMapper.updateUsername("Soy el sobreviviente",1);
 
         System.out.println("==========================");

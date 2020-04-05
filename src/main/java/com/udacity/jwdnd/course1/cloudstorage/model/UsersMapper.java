@@ -10,6 +10,15 @@ public interface UsersMapper {
     @Select("SELECT * FROM USERS WHERE userid = #{userid}")
     Users getUser(@Param("userid") int userid);
 
+
+    @Select("SELECT * FROM USERS WHERE username = #{username}")
+    Users getUserByUsername(@Param("username") String username);
+
+    @Select("SELECT * FROM ROLES WHERE userid = #{userid}")
+    ArrayList<Roles> getRolesByUserid(@Param("userid") int userid);
+
+
+
     //@Insert("INSERT INTO USERS (userid, username, salt, password, firstname, lastname) values (#{userid},#{username}, #{salt}, #{password}, #{firstname}, #{lastname})")
     /*@Insert("INSERT INTO USERS (userid,  firstname, lastname) values (#{userid}, #{firstname}, #{lastname})")
     void insertUsers(int userid, String firstname, String lastname);*/
@@ -26,5 +35,7 @@ public interface UsersMapper {
 
     @Delete("DELETE FROM USERS WHERE userid =#{userid}")
     void deleteUser(int userid);
+
+
 
 }

@@ -15,6 +15,13 @@ CREATE TABLE IF NOT EXISTS USERS (
 );
 
 
+CREATE TABLE IF NOT EXISTS ROLES (
+  roleid INT PRIMARY KEY auto_increment,
+  name VARCHAR(20),
+  userid INT ,
+  foreign key (userid) references USERS(userid)
+);
+
 CREATE TABLE IF NOT EXISTS NOTES (
     noteid INT PRIMARY KEY auto_increment,
     notetitle VARCHAR(20),

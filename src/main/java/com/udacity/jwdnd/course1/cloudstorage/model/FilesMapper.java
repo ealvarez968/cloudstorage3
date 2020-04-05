@@ -18,7 +18,12 @@ public interface FilesMapper {
     void updateFilename(String filename, int fileid);
 
 
-    @Delete("DELETE FROM FILES WHERE fileid =#{fileid}")
-    void deleteCredential(int fileid);
+    @Delete("DELETE FROM FILES WHERE fileid =#{fileid} and userid =#{userid}")
+    void deleteFiles(int fileid, int userid);
+
+    @Insert("INSERT INTO FILES (filename, contenttype, filedata, userid) values (#{filename}, #{contenttype}, #{filedata}, #{userid})")
+    void insertFile(Files file);
+
+
 
 }

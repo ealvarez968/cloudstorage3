@@ -22,7 +22,7 @@
                 </div>
 
             <div id="logoutDiv">
-                <form action="#" method="POST">
+                <form action="/logout" method="POST">
                     <button type="submit" class="btn btn-secondary float-right">Logout </button>
                 </form>
             </div>
@@ -36,7 +36,7 @@
                 </nav>
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="nav-files" role="tabpanel" aria-labelledby="nav-files-tab">
-                        <form action="#" enctype="multipart/form-data" method="POST">
+                        <form action="#" th:action="@{/home/file/upload}"  enctype="multipart/form-data" method="POST">
                             <div class="container">
                                 <div class="row" style="margin: 1em;">
                                     <div class="col-sm-2">
@@ -90,8 +90,8 @@
                                 <tbody>
                                     <tr th:each="n: ${notes}">
                                         <td>
-                                            <button type="button" class="btn btn-success">Edit</button>
-                                            <a class="btn btn-danger">Delete</a>
+                                            <button type="button"  th:attr="onclick=|showNoteModal('${n.noteid}', '${n.notetitle}', '${n.notedescription}')|"  class="btn btn-success">Edit</button>
+                                            <a  th:href="@{/home/notes/delete/{noteid}(noteid=${n.noteid})}" class="btn btn-danger">Delete</a>
                                         </td>
                                         <td  scope="row" th:text="${n.notetitle}" />
                                         <td th:text="${n.notedescription}" />
@@ -111,7 +111,7 @@
                                     </div>
                                     <div class="modal-body">
                                         <form action="#" th:action="@{/home/notes/add}" th:object="${note}" method="POST">
-                                            <input type="hidden"  name="noteId" id="note-id">
+                                            <input type="hidden"    name="noteId" id="note-id">
                                             <div class="form-group">
                                                 <label for="note-title" class="col-form-label">Title</label>
                                                 <input type="text" th:field="*{notetitle}" name= "noteTitle" class="form-control" id="note-title" maxlength="20" required>
@@ -137,7 +137,7 @@
                         </button>
 
                         <div class="table-responsive">
-                            <table class="table table-striped" th:object="${credentials}" id="credentialTable">
+                            <table class="table table-striped" id="credentialTable">
                                 <thead>
                                     <tr>
                                         <th style="width: 20%" scope="col"></th>
@@ -147,15 +147,22 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
+
+                                <tr th:each="c: ${credentials}">
                                     <td>
-                                        <button type="button" class="btn btn-success">Edit</button>
-                                        <a class="btn btn-danger">Delete</a>
+
+                                        <button type="button"  th:attr="onclick=|showCredentialModal('${c.credentialid}', '${c.url}', '${c.username}', '${c.unencripted}')|"  class="btn btn-success">Edit</button>
+                                        <a  th:href="@{/home/credentials/delete/{credentialid}(credentialid=${c.credentialid})}" class="btn btn-danger">Delete</a>
+
+
+
                                     </td>
-                                    <th scope="row">Example Credential URL</th>
-                                    <td>Example Credential Username</td>
-                                    <td>Example Credential Password</td>
+                                    <td  scope="row" th:text="${c.url}" />
+                                    <td th:text="${c.username}" />
+                                    <td th:text="${c.password}" />
+
                                 </tr>
+
                                 </tbody>
                             </table>
                         </div>
@@ -171,7 +178,7 @@
                                     </div>
                                     <div class="modal-body">
                                         todo
-                                        <form action="#"  th:action="@{/home}" th:object="${credential}" method="POST">
+                                        <form action="#"  th:action="@{/home/credential/add}"  th:object="${credential}" method="POST">
                                             <input type="hidden" name="credentialId" id="credential-id">
                                             <div class="form-group">
                                                 <label for="note-title" class="col-form-label">URL</label>

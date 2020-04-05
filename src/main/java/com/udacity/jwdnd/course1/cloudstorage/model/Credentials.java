@@ -8,6 +8,7 @@ public class Credentials {
     private String key;
     private String password;
     private int userid;
+    private String unencripted;
 
     public int getUserid() {
         return userid;
@@ -31,6 +32,9 @@ public class Credentials {
 
     public String getUrl() {
         return url;
+    }
+    public String getUnencripted() {
+        return unencripted;
     }
 
     public void setUserid(int userid) {
@@ -57,5 +61,10 @@ public class Credentials {
         this.url = url;
     }
 
+
+
+    public void setUnencripted(String unencripted) {
+        this.unencripted = unencripted;
+    }
 }
 

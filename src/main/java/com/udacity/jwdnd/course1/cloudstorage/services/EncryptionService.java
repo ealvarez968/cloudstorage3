@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 import javax.crypto.*;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
+import java.util.Random;
 
 @Service
 public class EncryptionService {
@@ -46,5 +48,14 @@ public class EncryptionService {
         }
 
         return new String(decryptedValue);
+    }
+
+    public String generateRandomSpecialCharacters(int length) {
+        byte[] array = new byte[length]; // length is bounded by 7
+        new Random().nextBytes(array);
+        String generatedString = new String(array, Charset.forName("UTF-8"));
+
+        System.out.println(generatedString);
+        return generatedString;
     }
 }

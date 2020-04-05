@@ -31,10 +31,6 @@ public class CloudStorageApplication {
 
 			System.out.println("NEW DATA");
 
-			Notes n = new Notes();
-			n.setNotedescription("Mi descripcion1");
-			n.setNoteid(1);
-			n.setNotetitle("titulo1");
 
 		};
 	}
